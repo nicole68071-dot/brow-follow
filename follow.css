@@ -1,0 +1,169 @@
+:root {
+  --bg: #F6F1EA;
+  --card: #FFFDF9;
+  --ink: #231D18;
+  --ink-2: #5F554B;
+  --line: #DCD2C6;
+  --signal: #0E6F68;
+  --signal-soft: #D9EEEA;
+  --warn-bg: #FBE9D7;
+  --warn-ink: #7A3A12;
+  --stage: #E7DED3;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.5 -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+button { font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+button:disabled { opacity: .4; cursor: default; }
+[hidden] { display: none !important; }
+
+#banner {
+  position: sticky; top: 0; z-index: 5;
+  background: var(--warn-bg); color: var(--warn-ink);
+  font-size: 14px; line-height: 1.5;
+  padding: calc(8px + env(safe-area-inset-top)) 16px 8px;
+}
+#banner summary { cursor: pointer; font-weight: 600; }
+#banner ul { margin: 6px 0 4px 20px; }
+
+#app {
+  max-width: 560px; margin: 0 auto;
+  min-height: 100vh; min-height: 100dvh;
+  display: flex; flex-direction: column;
+  padding: calc(12px + env(safe-area-inset-top)) 16px calc(14px + env(safe-area-inset-bottom));
+}
+body.has-banner #app { padding-top: 12px; }
+
+.top { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 30px; }
+.chip { font-size: 14px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--signal-soft); color: var(--signal); }
+.moment { font-size: 14px; color: var(--ink-2); }
+
+.media {
+  position: relative; flex: none; width: 100%;
+  aspect-ratio: 4 / 3; max-height: 46vh; max-height: 46dvh;
+  margin: 10px 0 12px; border-radius: 18px; overflow: hidden; background: var(--stage);
+}
+.media.tall { aspect-ratio: 1 / 1; max-height: 54vh; max-height: 54dvh; }
+.media.cam { aspect-ratio: 3 / 4; max-height: 60vh; max-height: 60dvh; }
+.media.stroke { aspect-ratio: 2 / 1; max-height: none; background: #1B1612; margin-bottom: 6px; }
+.stroke-stage, .stroke-stage svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.stroke-err { padding: 14px; color: #fff; font-size: 15px; }
+.controls[hidden] { display: none; }
+.pill { position: absolute; right: 10px; bottom: 10px; padding: 6px 14px; border-radius: 999px; border: 0;
+  background: rgba(27, 22, 18, .72); color: #fff; font-size: 14px; }
+.pill[hidden] { display: none; }
+/* D43：示范的字幕是画面上的临时浮层（信息架构：不设常驻文字带） */
+.stage-sub { position: absolute; left: 12px; right: 84px; bottom: 10px; margin: 0; padding: 4px 10px; border-radius: 10px;
+  background: rgba(27, 22, 18, .62); color: #fff; font-size: 16px; font-weight: 600; line-height: 1.4; width: fit-content; }
+.stage-sub:empty { display: none; }
+/* 入口：只画用到的化妆工具 */
+.tools { display: flex; justify-content: center; gap: 28px; margin: 28px 0 8px; }
+.tool { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--ink); }
+.tool svg { width: 72px; height: 72px; padding: 14px; border-radius: 20px; background: var(--card); box-sizing: content-box; }
+.tool figcaption { font-size: 15px; font-weight: 600; text-align: center; }
+.tool small { display: block; font-size: 13px; font-weight: 400; color: var(--ink-2); }
+.text-btn.info { align-self: center; font-size: 14px; color: var(--ink-2); }
+.lock { font-size: 13px; }
+.media canvas, .media video { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.media canvas { touch-action: none; }
+.media video { object-fit: contain; background: #1B1612; }
+.media video.mirror { transform: scaleX(-1); object-fit: cover; }
+.note { position: absolute; left: 12px; bottom: 8px; font-size: 12px; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.65); pointer-events: none; }
+.clip-missing {
+  position: absolute; inset: 0; display: grid; place-content: center;
+  padding: 20px; text-align: center; font-size: 15px;
+  background: var(--warn-bg); color: var(--warn-ink);
+}
+
+.say { font-size: 21px; line-height: 1.45; font-weight: 650; }
+.say.big { font-size: 24px; }
+.sub { margin-top: 6px; font-size: 16px; line-height: 1.6; color: var(--ink-2); }
+.why { margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: var(--card); font-size: 15px; line-height: 1.6; color: var(--ink-2); }
+.why b { color: var(--ink); }
+.draft { color: var(--warn-ink); font-size: 13px; }
+.list { margin: 6px 0 0 22px; color: var(--ink-2); }
+
+.actions { display: flex; flex-direction: column; gap: 10px; margin-top: auto; padding-top: 16px; }
+.primary { min-height: 60px; border: 0; border-radius: 16px; background: var(--ink); color: var(--bg); font-size: 19px; font-weight: 650; }
+.secondary { min-height: 52px; border: 1.5px solid var(--ink); border-radius: 14px; background: transparent; font-size: 17px; font-weight: 600; }
+.minor { display: flex; justify-content: space-between; margin-top: 8px; }
+.text-btn { min-height: 44px; padding: 0 6px; border: 0; background: none; color: var(--ink-2); font-size: 16px; text-decoration: underline; text-underline-offset: 3px; }
+
+#modal { position: fixed; inset: 0; z-index: 10; display: flex; align-items: flex-end; justify-content: center; background: rgba(35, 29, 24, .45); }
+.sheet { width: 100%; max-width: 560px; max-height: 92vh; max-height: 92dvh; overflow: auto; padding: 18px 16px calc(16px + env(safe-area-inset-bottom)); border-radius: 20px 20px 0 0; background: var(--bg); }
+
+fieldset { border: 0; margin-top: 18px; }
+legend { font-weight: 650; margin-bottom: 2px; }
+.opt { display: flex; align-items: center; gap: 10px; min-height: 48px; margin-top: 8px; padding: 8px 12px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--card); }
+.opt input { flex: none; width: 20px; height: 20px; accent-color: var(--signal); }
+textarea { width: 100%; min-height: 72px; margin-top: 8px; padding: 10px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--card); font: inherit; font-size: 16px; }
+pre.result { margin-top: 10px; padding: 12px; max-height: 52vh; overflow: auto; white-space: pre-wrap; border-radius: 12px; background: var(--card); font: 13px/1.6 ui-monospace, Menlo, monospace; user-select: text; -webkit-user-select: text; }
+
+/* D43 教学播放器：一看就知道"现在是在看动作" */
+.player { margin: 10px 0 12px; border-radius: 18px; overflow: hidden; background: #1B1612; }
+.player .media.stroke { margin: 0; border-radius: 0; }
+.badge { position: absolute; left: 10px; top: 10px; padding: 3px 10px; border-radius: 999px;
+  background: rgba(27, 22, 18, .72); color: #fff; font-size: 13px; font-weight: 600; }
+.player .stage-sub { right: 12px; }
+.controls { display: flex; align-items: center; gap: 10px; padding: 8px 12px 10px; color: #fff; }
+.ctl { flex: none; width: 40px; height: 40px; display: grid; place-items: center; border: 0; border-radius: 999px;
+  background: rgba(255, 255, 255, .14); color: #fff; padding: 0; }
+.ctl svg { width: 22px; height: 22px; }
+.ctl[hidden] { display: none; }
+.bar { position: relative; flex: 1; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, .22); }
+.bar .fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 3px; background: #7FD3C7; }
+.bar i { position: absolute; top: -3px; width: 2px; height: 12px; margin-left: -1px; background: rgba(255, 255, 255, .8); }
+.count { flex: none; font-size: 13px; font-variant-numeric: tabular-nums; }
+/* 确认页的找法示意 */
+.rule-diagram { margin: 6px 0 0; padding: 8px 10px; border-radius: 14px; background: var(--card); }
+.rule-diagram svg { display: block; width: 100%; max-width: 340px; margin: 0 auto; }
+.rule-diagram .lbl text { font-size: 13px; font-weight: 600; fill: var(--ink); }
+.rule-diagram figcaption { margin-top: 4px; font-size: 14px; color: var(--ink-2); text-align: center; }
+
+/* D43 目标图：新加的笔触高亮一下再淡出 */
+@keyframes sd-hl { 0% { opacity: 0; } 15% { opacity: .9; } 70% { opacity: .9; } 100% { opacity: 0; } }
+.sd-hl { opacity: 0; animation: sd-hl 2.4s ease-out .3s 1 both; }
+@media (prefers-reduced-motion: reduce) { .sd-hl { animation: none; opacity: .55; } }
+
+/* 妆效预览：按住"看原图"时藏起目标眉形和笔触 */
+.stroke-stage.before [data-role="halo"], .stroke-stage.before [data-role="pigment"] { visibility: hidden; }
+/* 2026-10-10 真机录屏：拖定位点、按按钮时，Safari 长按会选中旁边的字并弹出"拷贝 / 查找"菜单 ⇒ 整页不让长按选字；
+   结果文字（复制的兜底）和输入框照常可选 */
+body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+textarea, input, pre.result { -webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }
+
+/* 不用补的那条眉：照片照常显示，提示放在左下角（2026-10-10 真机录屏：原来是黑底，提示压在"目标"角标下） */
+.stage-note { position: absolute; left: 10px; bottom: 10px; margin: 0; padding: 3px 10px; border-radius: 999px;
+  background: rgba(27, 22, 18, .72); color: #fff; font-size: 13px; }
+
+/* 追问位置：眉头、眉身、眉尾排一行 */
+.opt-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.opt-row .opt { flex: 1 1 0; }
+fieldset[hidden] { display: none; }
+
+/* 2026-10-11 布局 D（练习屏、自查屏）：上面双眉总览（左右和镜子里一致），下面放大当前这条眉 */
+.board { margin: 10px 0 12px; }
+.board-tags { position: relative; height: 32px; }
+.side-tag { position: absolute; top: 2px; transform: translateX(-50%); padding: 3px 12px; border-radius: 999px; white-space: nowrap;
+  border: 1.5px solid var(--signal); background: var(--card); color: var(--signal); font-size: 13px; font-weight: 600; line-height: 1.4; }
+.side-tag.on { background: var(--signal); color: #fff; }
+.side-tag.off { border-color: var(--line); color: var(--ink-2); font-weight: 400; }
+.media.overview { margin: 0; max-height: none; background: #1B1612; } /* 宽高比按取景写在行内 */
+.overview-marks { position: absolute; inset: 0; pointer-events: none; }
+.end-dot { position: absolute; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 1.5px var(--signal); }
+.ov-frame { position: absolute; border: 3px solid var(--signal); border-radius: 10px; } /* 框收在照片里面，不被边缘裁掉 */
+.media.zoom { margin: 8px 0 0; }
+.media.zoom[hidden] { display: none; }
+/* 新加的笔：青绿色那一层停一下再淡出，露出下面自然眉色的同一组笔（临时高亮，Nicole 2026-10-11） */
+@keyframes mark-fade { 0%, 45% { opacity: 1; } 100% { opacity: 0; } }
+.mark-layer { position: absolute; inset: 0; pointer-events: none; animation: mark-fade 2.8s ease-in .2s 1 both; }
+.mark-layer svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+@media (prefers-reduced-motion: reduce) { .mark-layer { animation-timing-function: step-end; } } /* 不渐变，停一下直接换 */
+/* 最后自查的两项检查 */
+.checks { margin: 8px 0 0 1.2em; color: var(--ink); font-size: 16px; line-height: 1.6; }
+.checks li { margin-top: 4px; }
